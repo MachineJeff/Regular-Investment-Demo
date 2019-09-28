@@ -5,14 +5,14 @@
 '''
 import csv
 import argparse
-import matplotlib.pyplot as plt
 from run_fix import run_fix
 from run_covering import run_covering
+from plot import plot
 
 ########################################################################################
 # Read data
 
-file = '000001.csv'
+file = 'data/000001.csv'
 timeseries = 5 * 240
 
 data = []
@@ -39,6 +39,9 @@ def run(args):
 		run_fix(args, SSE_Composite_Index)
 	else:
 		run_covering(args, SSE_Composite_Index)
+
+	plot(SSE_Composite_Index, path='pics/1.png')
+
 
 def main():
 	parser =argparse.ArgumentParser()

@@ -1,23 +1,8 @@
-from plot import plot
 from pandas.core.frame import DataFrame
 import os
-
-def next_day(day):
-    day = day.split("-")
-
-    year = int(day[0])
-    month = int(day[1])
-    da = int(day[2])
-
-    if(da < 31):
-        return str(year) + '-' + str(month) + '-' + str(da + 1)
-    if(month < 12):
-        return str(year) + '-' + str(month + 1) + '-' + str(1)
-    if(year < 2019):
-        return str(year + 1) + '-' + str(1) + '-' + str(1)
+from tools import next_day, annual_rate, plot
 
 def run_fix(args, data, title):
-
 
     start = args.start_time
     col = data[data['time'].isin([start])]
@@ -81,7 +66,11 @@ def run_fix(args, data, title):
     print("         Captial investment is    {:.2f} RMB\n".format(args.money))
 
     print("         Your captial money is    {:.2f} RMB".format(pay_value))
-    print("  Your ruturn of investment is    {:.2f} RMB".format(return_value))
-    print("                 Your yield is    {:.2f}%".format(yields[-1]))
-    print("             Your max yield is    {:.2f}%".format(max_yield))
+    print("  Your ruturn of investment is    {:.2f} RMB\n".format(return_value))
+    print("           Your final yield is    {:.2f}%".format(yields[-1]))
+    print("          Your annual yield is    {:.2f}%\n".format(annual_rate((1+yields[-1]/100), args.duration) * 100))
+
+    print("       Your final max yield is    {:.2f}%".format(max_yield))
+    print("      Your annual max yield is    {:.2f}%".format(annual_rate((1+max_yield/100), args.duration) * 100))    
+
     print(" Your yield curve has saved in    {}".format(os.path.join(path, name)))

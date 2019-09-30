@@ -5,9 +5,8 @@
 '''
 import csv
 import argparse
-from run_fix import run_fix
-from run_covering import run_covering
-from plot import plot
+from strategy import run_fix, run_covering
+from tools import plot
 from pandas.core.frame import DataFrame
 import os
 
@@ -60,18 +59,15 @@ def read_index(args):
     name = title.replace(' ', '-') + '.png'
     path = os.path.join(os.getcwd(),'pics')
     plot(data, path = os.path.join(path, name), title = title)
-    print("Sample data of {}".format(title))
-    print(data.head(3))
-    print()
     print("Curve of {} has saved in {}\n".format(title, os.path.join(path, name)))
     return data, title
 
 def run(args):
     data, title = read_index(args)
     if(args.strategy == 'fix'):
-        run_fix(args, data, title)
+        run_fix.run_fix(args, data, title)
     else:
-        run_covering(args, data, title)
+        run_covering.run_covering(args, data, title)
 
 
 def main():

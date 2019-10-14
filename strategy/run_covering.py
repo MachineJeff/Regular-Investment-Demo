@@ -24,27 +24,35 @@ def run_covering(args, data, title):
     end_time = str(data["time"][data.index[end_idd]])[:-9]
 
     shares = []
-    pays = []
     values = []
+    pays = []
     yield_time = []
 
     i = 1
     while(start_idd <= end_idd):
-        share = args.money / data["index"][data.index[start_idd]]
-        yield_time.append(data["time"][data.index[start_idd]])
-        shares.append(share)
-        pays.append(args.money * i)             
-        values.append(sum(shares) * data["index"][data.index[start_idd]])
-
-        start_idd += args.interval
+        if len(shares) == 0:
+            share = args.money / data['index'][data.index[start_idd]]
+            shares.append(share)
+            yield_time.append(data["time"][data.index[start_idd]])
+            pays.append(args.money)
+            values.append(args.money)
+        else:
+            value = sum(shares) * data['index'][data.index[start_idd]]
+            pay = args.money * i - value
+            share = pay / data['index'][data.index[start_idd]]
+            yield_time.append(data["time"][data.index[start_idd]])
+            shares.append(share)
+            pays.append(pay)
+            values.append(args.money * i)
         i += 1
+        start_idd += args.interval
 
     return_value = values[-1]
-    pay_value = pays[-1]
+    pay_value = sum(pays)
 
     yields = []
     for i in range(len(pays)):
-        yield_rate = (values[i] - pays[i]) / pays[i] * 100.0
+        yield_rate = (values[i] - sum(pays[:i+1])) / sum(pays[:i+1]) * 100.0
         yields.append(yield_rate)
 
     max_yield = max(yields)

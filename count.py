@@ -55,6 +55,7 @@ def read_index(args):
     data = {"time":Time_Label,
             "index":INDEX}
     data = DataFrame(data)
+    print(data.head())
     # Draw the picture of INDEX
     name = title.replace(' ', '-') + '.png'
     path = os.path.join(os.getcwd(),'pics')

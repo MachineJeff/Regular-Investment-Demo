@@ -37,9 +37,9 @@ though I can not achieve it now.
 #### To do list
 
 - [x] fix strategy 每期固定资本投资
-- [ ] covering strategy 每期补仓投资
-- [ ] picture show
+- [x] covering strategy 每期补仓投资
+- [x] picture show
 
 #### The SSE Composite Index
 
-![](pics/1.png)
+![](pics/Yield-of-SSE-Composite-Index.png)
